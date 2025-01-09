@@ -73,22 +73,19 @@ public class Main {
                 case "1":
                     System.out.print("Введите категорию: ");
                     String incomeCategory = scanner.nextLine();
-                    System.out.print("Введите сумму: ");
-                    double incomeAmount = Double.parseDouble(scanner.nextLine());
+                    double incomeAmount = getValidatedAmount(scanner);
                     wallet.addIncome(incomeCategory, incomeAmount);
                     break;
                 case "2":
                     System.out.print("Введите категорию: ");
                     String expenseCategory = scanner.nextLine();
-                    System.out.print("Введите сумму: ");
-                    double expenseAmount = Double.parseDouble(scanner.nextLine());
+                    double expenseAmount = getValidatedAmount(scanner);
                     wallet.addExpense(expenseCategory, expenseAmount);
                     break;
                 case "3":
                     System.out.print("Введите категорию: ");
                     String budgetCategory = scanner.nextLine();
-                    System.out.print("Введите сумму: ");
-                    double budgetAmount = Double.parseDouble(scanner.nextLine());
+                    double budgetAmount = getValidatedAmount(scanner);
                     wallet.setBudget(budgetCategory, budgetAmount);
                     break;
                 case "4":
@@ -99,6 +96,22 @@ public class Main {
                     return;
                 default:
                     System.out.println("Неверный выбор. Попробуйте ещё раз.");
+            }
+        }
+    }
+
+    private static double getValidatedAmount(Scanner scanner) {
+        while (true) {
+            try {
+                System.out.print("Введите сумму: ");
+                double amount = Double.parseDouble(scanner.nextLine());
+                if (amount < 0) {
+                    System.out.println("Сумма не может быть отрицательной. Попробуйте ещё раз.");
+                } else {
+                    return amount;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Неверный формат суммы. Пожалуйста введите число.");
             }
         }
     }

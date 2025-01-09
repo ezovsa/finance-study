@@ -24,6 +24,18 @@ class Wallet {
     public void addExpense(String category, double amount) {
         totalExpense += amount;
         expenseByCategory.put(category, expenseByCategory.getOrDefault(category, 0.0) + amount);
+
+        if (budgetByCategory.containsKey(category)) {
+            double budget = budgetByCategory.get(category);
+            double expense = expenseByCategory.get(category);
+            if (expense > budget) {
+                System.out.printf("Предупреждение: Вы превысили расходы в категории: '%s'. Текущие расходы: %.2f, Бюджет: %.2f\n", category, expense, budget);
+            }
+        }
+
+        if (totalExpense > totalIncome) {
+            System.out.printf("Предупреждение: Ваш суммарный расход (%.2f) превышает текущий доход (%.2f).\n", totalExpense, totalIncome);
+        }
     }
 
     public void setBudget(String category, double amount) {
